@@ -12,8 +12,7 @@ public class OperationFactory {
     
     public static Operation create(String symbol) {
         if (symbol == null) {
-            throw new IllegalArgumentException("Operator is null");
-        }
+            throw new IllegalArgumentException("Operator is null");}
         symbol = symbol.trim();
         switch (symbol) {
             case "+":              return new AddOperation();

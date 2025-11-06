@@ -76,10 +76,11 @@ public final class Calculator {
 
         float result;
         try {
-            
+            // get correct operation from factory
             Operation op = OperationFactory.create(this.operation); 
             // "+", "-", "×", "÷"
-            
+            // wrap it with decorator to add history logging
+            op = new HistoryDecorator(op);
             result = op.applyOperation(prev, curr);
         } catch (ArithmeticException ex) {
             // divide-by-zero -> show "Error", then clear next step

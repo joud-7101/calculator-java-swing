@@ -1,6 +1,5 @@
 package thecalculatorsystem;
 
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -8,27 +7,20 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
 
-/**
- * CalculatorFrame (VIEW / UI): Handles all visual components and user interactions
- * + Calls methods from the Calculator Singleton to perform actions
- */
 
 public final class CalculatorFrame extends javax.swing.JFrame {
 
-    // moved logic out of the frame
-private final Calculator calculator = Calculator.getInstance();
-
-    
     private int x, y;
 
     public CalculatorFrame() {
-        initComponents();                         
+        initComponents();
         getContentPane().setSize(400, 700);
-        this.addEvents();                         
-        refreshDisplay();                        
+        addEvents();
+        refreshDisplay();
     }
 
-    public void addEvents() {
+
+    private void addEvents() {
         JButton[] btns = {
             btn0, btn1, btn2, btn3, btn4,
             btn5, btn6, btn7, btn8, btn9,
@@ -43,20 +35,18 @@ private final Calculator calculator = Calculator.getInstance();
 
         for (JButton number : numbers) {
             number.addActionListener((ActionEvent e) -> {
-                calculator.clearCurrentIfError();
-                calculator.appendNumber(((JButton) e.getSource()).getText());
+                CalculatorFacade.clearCurrentIfError();
+                CalculatorFacade.appendNumber(((JButton) e.getSource()).getText());
                 refreshDisplay();
             });
         }
 
         for (JButton btn : btns) {
             btn.addMouseListener(new MouseAdapter() {
-
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     ((JButton) e.getSource()).setBackground(new Color(73, 69, 78));
                 }
-
                 @Override
                 public void mouseExited(MouseEvent e) {
                     Object b = e.getSource();
@@ -70,14 +60,13 @@ private final Calculator calculator = Calculator.getInstance();
         }
     }
 
-    /* display update  */
     private void refreshDisplay() {
-        current.setText(calculator.getCurrent());
-        previous.setText(calculator.getPrevious() + " " + calculator.getOperation());
+        current.setText(CalculatorFacade.getCurrent());
+        previous.setText(CalculatorFacade.getPrevious() + " " + CalculatorFacade.getOperation());
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         app = new javax.swing.JPanel();
@@ -155,11 +144,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnDel.setIconTextGap(1);
         btnDel.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnDel.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnDel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelActionPerformed(evt);
-            }
-        });
+        btnDel.addActionListener(this::btnDelActionPerformed);
         buttonsPanel.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btnClear.setBackground(new java.awt.Color(41, 39, 44));
@@ -172,11 +157,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnClear.setIconTextGap(1);
         btnClear.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnClear.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
+        btnClear.addActionListener(this::btnClearActionPerformed);
         buttonsPanel.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
         btnDiv.setBackground(new java.awt.Color(41, 39, 44));
@@ -189,11 +170,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnDiv.setIconTextGap(1);
         btnDiv.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnDiv.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnDiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDivActionPerformed(evt);
-            }
-        });
+        btnDiv.addActionListener(this::btnDivActionPerformed);
         buttonsPanel.add(btnDiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
         btnMult.setBackground(new java.awt.Color(41, 39, 44));
@@ -206,11 +183,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnMult.setIconTextGap(1);
         btnMult.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnMult.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnMult.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMultActionPerformed(evt);
-            }
-        });
+        btnMult.addActionListener(this::btnMultActionPerformed);
         buttonsPanel.add(btnMult, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         btn7.setBackground(new java.awt.Color(21, 20, 22));
@@ -223,6 +196,7 @@ private final Calculator calculator = Calculator.getInstance();
         btn7.setIconTextGap(1);
         btn7.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn7.setPreferredSize(new java.awt.Dimension(70, 70));
+        // digits are wired in addEvents() loop
         buttonsPanel.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         btn8.setBackground(new java.awt.Color(21, 20, 22));
@@ -259,11 +233,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnSub.setIconTextGap(1);
         btnSub.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnSub.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnSub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubActionPerformed(evt);
-            }
-        });
+        btnSub.addActionListener(this::btnSubActionPerformed);
         buttonsPanel.add(btnSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
 
         btn4.setBackground(new java.awt.Color(21, 20, 22));
@@ -312,11 +282,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnPlus.setIconTextGap(1);
         btnPlus.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnPlus.setPreferredSize(new java.awt.Dimension(70, 140));
-        btnPlus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlusActionPerformed(evt);
-            }
-        });
+        btnPlus.addActionListener(this::btnPlusActionPerformed);
         buttonsPanel.add(btnPlus, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
 
         btn1.setBackground(new java.awt.Color(21, 20, 22));
@@ -365,11 +331,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnPlusSub.setIconTextGap(1);
         btnPlusSub.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnPlusSub.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnPlusSub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlusSubActionPerformed(evt);
-            }
-        });
+        btnPlusSub.addActionListener(this::btnPlusSubActionPerformed);
         buttonsPanel.add(btnPlusSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
         btn0.setBackground(new java.awt.Color(21, 20, 22));
@@ -394,11 +356,7 @@ private final Calculator calculator = Calculator.getInstance();
         btnDot.setIconTextGap(1);
         btnDot.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnDot.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnDot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDotActionPerformed(evt);
-            }
-        });
+        btnDot.addActionListener(this::btnDotActionPerformed);
         buttonsPanel.add(btnDot, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, -1));
 
         btnEqual.setBackground(new java.awt.Color(41, 39, 44));
@@ -411,15 +369,37 @@ private final Calculator calculator = Calculator.getInstance();
         btnEqual.setIconTextGap(1);
         btnEqual.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnEqual.setPreferredSize(new java.awt.Dimension(70, 70));
-        btnEqual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEqualActionPerformed(evt);
-            }
-        });
+        btnEqual.addActionListener(this::btnEqualActionPerformed);
         buttonsPanel.add(btnEqual, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, -1, -1));
 
         app.add(buttonsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 320, 390));
 
+        //  Added a new "History" button that connects the GUI with HistoryDecorator.
+        
+    JButton btnHistory = new JButton("History");
+    btnHistory.setBackground(new java.awt.Color(60, 58, 64));
+    btnHistory.setFont(new java.awt.Font("Century Gothic", 1, 14));
+    btnHistory.setForeground(java.awt.Color.WHITE);
+    btnHistory.setFocusPainted(false);
+    btnHistory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 39, 44)));
+    btnHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    btnHistory.addActionListener(e -> {
+        if (CalculatorFacade.getHistory().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No history yet!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                String.join("\n", CalculatorFacade.getHistory()),
+                "Calculation History",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    });
+
+     app.add(btnHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 120, 35));
+     app.revalidate();
+     app.repaint();
+     
         titleBar.setBackground(new java.awt.Color(21, 20, 22));
         titleBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -455,11 +435,7 @@ private final Calculator calculator = Calculator.getInstance();
                 btnMiniMouseExited(evt);
             }
         });
-        btnMini.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMiniActionPerformed(evt);
-            }
-        });
+        btnMini.addActionListener(this::btnMiniActionPerformed);
         titleBar.add(btnMini, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 30, -1));
 
         btnClose.setBackground(new java.awt.Color(21, 20, 22));
@@ -477,11 +453,7 @@ private final Calculator calculator = Calculator.getInstance();
                 btnCloseMouseExited(evt);
             }
         });
-        btnClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseActionPerformed(evt);
-            }
-        });
+        btnClose.addActionListener(this::btnCloseActionPerformed);
         titleBar.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 30, -1));
 
         app.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 30));
@@ -495,111 +467,110 @@ private final Calculator calculator = Calculator.getInstance();
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(app, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(app, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
 
     /* ======================= event handlers ======================= */
 
-    private void btnDotActionPerformed(java.awt.event.ActionEvent evt) { 
-        calculator.clearCurrentIfError();
-        calculator.appendNumber((calculator.getCurrent().isBlank() ? "0." : "."));
+    private void btnDotActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.appendNumber(CalculatorFacade.getCurrent().isBlank() ? "0." : ".");
         refreshDisplay();
-    }                                      
-
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        calculator.clear();
-        refreshDisplay();
-    }                                        
-
-                                     
-private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {
-    calculator.compute();
-    refreshDisplay();               // show result OR "Error"
-    calculator.clearCurrentIfError(); 
-}
-    private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {                                        
-         calculator.clearCurrentIfError();
-        calculator.chooseOperation("+");
-        refreshDisplay();
-    }                                       
-
-    private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {                                        
-         calculator.clearCurrentIfError();
-        calculator.chooseOperation("×");
-        refreshDisplay();
-    }                                       
-
-    private void btnSubActionPerformed(java.awt.event.ActionEvent evt) {                                       
-         calculator.clearCurrentIfError();
-        calculator.chooseOperation("-");
-        refreshDisplay();
-    }                                      
-
-    private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        calculator.clearCurrentIfError();
-        calculator.chooseOperation("÷");
-        refreshDisplay();
-    }                                      
-
-  private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {
-    if ("Error".equals(calculator.getCurrent())) {     
-        calculator.clearCurrentIfError();              
-        refreshDisplay();                              
-        return;                                        
     }
-    calculator.backspace();
-    refreshDisplay();
-}
-                                      
 
-    private void btnPlusSubActionPerformed(java.awt.event.ActionEvent evt) {                                           
-         calculator.clearCurrentIfError();
-        calculator.toggleSign();
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clear();
         refreshDisplay();
-    }                                          
+    }
 
-    private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {                                      
+    private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.compute();
+        refreshDisplay();               // show result OR "Error"
+        CalculatorFacade.clearCurrentIfError();
+    }
+
+    private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.chooseOperation("+");
+        refreshDisplay();
+    }
+
+    private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.chooseOperation("×");
+        refreshDisplay();
+    }
+
+    private void btnSubActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.chooseOperation("-");
+        refreshDisplay();
+    }
+
+    private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.chooseOperation("÷");
+        refreshDisplay();
+    }
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {
+        if ("Error".equals(CalculatorFacade.getCurrent())) {
+            CalculatorFacade.clearCurrentIfError();
+            refreshDisplay();
+            return;
+        }
+        CalculatorFacade.backspace();
+        refreshDisplay();
+    }
+
+    private void btnPlusSubActionPerformed(java.awt.event.ActionEvent evt) {
+        CalculatorFacade.clearCurrentIfError();
+        CalculatorFacade.toggleSign();
+        refreshDisplay();
+    }
+
+    private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {
         btnClose.setBackground(new Color(255, 75, 75));
         btnClose.setForeground(new Color(31, 30, 33));
-    }                                     
+    }
 
-    private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {                                     
+    private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {
         btnClose.setBackground(new Color(21,20,22));
         btnClose.setForeground(Color.WHITE);
-    }                                    
+    }
 
-    private void btnMiniMouseEntered(java.awt.event.MouseEvent evt) {                                     
+    private void btnMiniMouseEntered(java.awt.event.MouseEvent evt) {
         btnMini.setBackground(new Color(73, 69, 78));
-    }                                    
+    }
 
-    private void btnMiniMouseExited(java.awt.event.MouseEvent evt) {                                    
+    private void btnMiniMouseExited(java.awt.event.MouseEvent evt) {
         btnMini.setBackground(new Color(21,20,22));
-    }                                   
+    }
 
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
-    }                                        
+    }
 
-    private void btnMiniActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void btnMiniActionPerformed(java.awt.event.ActionEvent evt) {
         setState(CalculatorFrame.ICONIFIED);
-    }                                       
+    }
 
-    private void titleBarMousePressed(java.awt.event.MouseEvent evt) {                                      
+    private void titleBarMousePressed(java.awt.event.MouseEvent evt) {
         x = evt.getX();
         y = evt.getY();
-    }                                     
+    }
 
-    private void titleBarMouseDragged(java.awt.event.MouseEvent evt) {                                      
+    private void titleBarMouseDragged(java.awt.event.MouseEvent evt) {
         int xx = evt.getXOnScreen();
         int yy = evt.getYOnScreen();
         this.setLocation(xx - x, yy - y);
-    }                                     
+    }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify
     private javax.swing.JPanel app;
     private static javax.swing.JButton btn0;
     private static javax.swing.JButton btn1;
