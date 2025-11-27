@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/App.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/Calculator.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/AddOperation.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/CalculatorFacade.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/CalculatorFrame.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/DivideOperation.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/HistoryDecorator.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/MultiplyOperation.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/Operation.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/OperationDecorator.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/OperationFactory.java</file>
+            <file>file:/C:/Users/Asus/Desktop/workStation/school/sdp/project/TheCalculatorSystemDecorator/TheCalculatorSystem/src/Calc/SubtractOperation.java</file>
+        </group>
     </open-files>
 </project-private>
