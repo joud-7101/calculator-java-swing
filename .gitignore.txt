@@ -1,0 +1,21 @@
+# Ignore NetBeans build directories
+/build/
+/dist/
+
+# Ignore temporary NetBeans private files
+nbproject/private/
+
+# Ignore compiled class files
+**/*.class
+
+# Ignore OS junk files
+Thumbs.db
+.DS_Store
+
+# Ignore local screenshot or media folders (if any)
+Screenshots/
+*.png
+*.jpg
+
+# Ignore temporary or custom folders
+$*
