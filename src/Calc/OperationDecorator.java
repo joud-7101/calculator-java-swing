@@ -4,10 +4,7 @@
  */
 package Calc;
 
-/**
- *
- * @author alhar
- */
+
 
 
 public abstract class OperationDecorator implements Operation {
@@ -19,7 +16,6 @@ public abstract class OperationDecorator implements Operation {
 
     @Override
     public float applyOperation(float a, float b) {
-        // default: just delegate
         return wrappee.applyOperation(a, b);
     }
 }

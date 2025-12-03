@@ -1,44 +1,29 @@
 package Calc;
 
-/*
- * Calculator.java: the logic of the code
- *
- * PATTERNS USED HERE:
- *   1) **Singleton (Eager)**
- *        - Exactly one Calculator instance used across the app.
- *
- *   2) **Factory Method (via OperationFactory)**
- *        - The Calculator is the **Client** of the factory.
- *        - It asks the factory: “Given this operator symbol (‘+’, ‘-’, ‘×’, ‘÷’),
- *          give me the corresponding Operation object.”
- *        - The factory returns a **Concrete Product** (AddOperation, SubtractOperation, …),
- *          which implements the **Product** interface (Operation).
- */
 
 public final class Calculator {
 
-  
-    // =========================
-    // 1) SINGLETON (EAGER)
-    // =========================
     private static Calculator instance = new Calculator();
-    public static Calculator getInstance() { return instance; }
 
-   
-    private String currentOperand;   
-    private String previousOperand;  
-    private String operation;        
+    public static Calculator getInstance() { 
+        return instance; 
+    }
 
-    // Private constructor
-    private Calculator() { clear(); }
+    private String currentOperand;
 
+    private String previousOperand;
+
+    private String operation;
+
+    private Calculator() { 
+        clear(); 
+    }
 
     public void clear() {
         this.currentOperand = "";
         this.previousOperand = "";
         this.operation = "";
     }
-
 
     public void appendNumber(String number) {
         if ("0".equals(this.currentOperand) && "0".equals(number)) return;
@@ -49,16 +34,16 @@ public final class Calculator {
         this.currentOperand += number;
     }
 
-  
     public void chooseOperation(String operation) {
         if (this.currentOperand.equals("") && !this.previousOperand.equals("")) {
             this.operation = operation; // allow changing operator
             return;
         }
+
         if (this.currentOperand.equals("")) return;
 
         if (!this.previousOperand.equals("")) {
-            this.compute(); // chain: e.g., "8 + 2 + 3"
+            this.compute(); 
         }
 
         this.operation = operation;
@@ -66,7 +51,6 @@ public final class Calculator {
         this.currentOperand = "";
     }
 
- 
     public void compute() {
         if (this.currentOperand.equals("") || this.previousOperand.equals("")) return;
 
@@ -76,55 +60,62 @@ public final class Calculator {
 
         float result;
         try {
-            
-            Operation op = OperationFactory.create(this.operation); 
-            
+            Operation op = OperationFactory.create(this.operation);
+
             op = new HistoryDecorator(op);
-            
+
             result = op.applyOperation(prev, curr);
-            
         } catch (ArithmeticException ex) {
             clear();
             this.currentOperand = "Error";
             return;
         } catch (IllegalArgumentException ex) {
-            // unknown operator -> do nothing
             return;
         }
 
-        // show integers without ".0"
         this.currentOperand = (result - (int) result) != 0
                 ? Float.toString(result)
                 : Integer.toString((int) result);
 
-        // reset pending state
         this.previousOperand = "";
         this.operation = "";
     }
 
-  
+ 
     public void backspace() {
         if (!this.currentOperand.equals("")) {
             this.currentOperand = this.currentOperand.substring(0, this.currentOperand.length() - 1);
         }
     }
 
- 
     public void toggleSign() {
         if (!this.currentOperand.isBlank()) {
             float tmp = -Float.parseFloat(this.currentOperand);
-            this.currentOperand = (tmp - (int) tmp) != 0 ? Float.toString(tmp) : Integer.toString((int) tmp);
+            this.currentOperand = (tmp - (int) tmp) != 0 
+                    ? Float.toString(tmp) 
+                    : Integer.toString((int) tmp);
         }
     }
-
-  
 
     public String getCurrent()   { return currentOperand; }
     public String getPrevious()  { return previousOperand; }
     public String getOperation() { return operation; }
 
- 
     public void clearCurrentIfError() {
         if ("Error".equals(currentOperand)) currentOperand = "";
+    }
+
+    public CalculatorMemento saveState() {
+        return new CalculatorMemento(
+            this.currentOperand,
+            this.previousOperand,
+            this.operation
+        );
+    }
+    public void restoreState(CalculatorMemento memento) {
+        if (memento == null) return;
+        this.currentOperand   = memento.getCurrent();
+        this.previousOperand  = memento.getPrevious();
+        this.operation        = memento.getOperation();
     }
 }

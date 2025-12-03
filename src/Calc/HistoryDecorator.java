@@ -4,10 +4,7 @@
  */
 package Calc;
 
-/**
- *
- * @author jojsa
- */
+
 
 
 import Calc.AddOperation;

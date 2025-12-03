@@ -3,36 +3,52 @@ package Calc;
 import java.util.List;
 
 public class CalculatorFacade {
-    private static Calculator calc = Calculator.getInstance();
 
-    public static void appendNumber(String token) {
-        calc.appendNumber(token);
+    private static final Calculator calc = Calculator.getInstance();
+
+    public static void appendDigit(String digit) {
+        Command cmd = new AppendDigitCommand(calc, digit);
+        cmd.execute();
     }
 
-    public static void chooseOperation(String symbol) {
-        calc.chooseOperation(symbol);
+    public static void appendDot() {
+        Command cmd = new DotCommand(calc);
+        cmd.execute();
+    }
+
+    public static void chooseOperation(String op) {
+        Command cmd = new ChooseOperationCommand(calc, op);
+        cmd.execute();
     }
 
     public static void compute() {
-        calc.compute();
+        Command cmd = new ComputeCommand(calc);
+        cmd.execute();
     }
 
     public static void clear() {
-        calc.clear();
+        Command cmd = new ClearCommand(calc);
+        cmd.execute();
     }
 
     public static void backspace() {
-        calc.backspace();
+        Command cmd = new BackspaceCommand(calc);
+        cmd.execute();
     }
 
     public static void toggleSign() {
-        calc.toggleSign();
+        Command cmd = new ToggleSignCommand(calc);
+        cmd.execute();
     }
 
-    public static void clearCurrentIfError() {
-        calc.clearCurrentIfError();
+    public static boolean undo() {
+        CalculatorMemento m = CalculatorCaretaker.undo();
+        if (m == null) {
+            return false;
+        }
+        calc.restoreState(m);
+        return true;
     }
-
 
     public static String getCurrent() {
         return calc.getCurrent();
@@ -45,7 +61,8 @@ public class CalculatorFacade {
     public static String getOperation() {
         return calc.getOperation();
     }
-    
+
     public static List<String> getHistory() {
         return HistoryDecorator.getHistory();
-    }}
+    }
+}

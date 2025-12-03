@@ -1,13 +1,7 @@
 package Calc;
 
 
-/*
- * This class demonstrates the **Factory Method Design Pattern**.
 
- * Purpose in this project:
- *    - Instead of hardcoding 'new AddOperation()', 'new SubtractOperation()', etc.
- *      inside the Calculator class, we delegate object creation to this Factory.
- */
 
 public class OperationFactory {
     

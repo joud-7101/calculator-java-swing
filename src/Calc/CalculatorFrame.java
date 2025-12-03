@@ -1,12 +1,11 @@
 package Calc;
 
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-
-
 
 public final class CalculatorFrame extends javax.swing.JFrame {
 
@@ -19,8 +18,8 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         refreshDisplay();
     }
 
-
     private void addEvents() {
+
         JButton[] btns = {
             btn0, btn1, btn2, btn3, btn4,
             btn5, btn6, btn7, btn8, btn9,
@@ -35,8 +34,8 @@ public final class CalculatorFrame extends javax.swing.JFrame {
 
         for (JButton number : numbers) {
             number.addActionListener((ActionEvent e) -> {
-                CalculatorFacade.clearCurrentIfError();
-                CalculatorFacade.appendNumber(((JButton) e.getSource()).getText());
+                String d = ((JButton) e.getSource()).getText();
+                CalculatorFacade.appendDigit(d);  // Client → Facade
                 refreshDisplay();
             });
         }
@@ -50,7 +49,9 @@ public final class CalculatorFrame extends javax.swing.JFrame {
                 @Override
                 public void mouseExited(MouseEvent e) {
                     Object b = e.getSource();
-                    if (b == btnDiv || b == btnEqual || b == btnDel || b == btnMult || b == btnSub || b == btnPlus || b == btnClear) {
+                    if (b == btnDiv || b == btnEqual || b == btnDel
+                            || b == btnMult || b == btnSub
+                            || b == btnPlus || b == btnClear) {
                         ((JButton) b).setBackground(new Color(41, 39, 44));
                     } else {
                         ((JButton) b).setBackground(new Color(21, 20, 22));
@@ -66,7 +67,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    
     private void initComponents() {
 
         app = new javax.swing.JPanel();
@@ -134,6 +135,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         buttonsPanel.setPreferredSize(new java.awt.Dimension(250, 50));
         buttonsPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        // Top row: Del, C, ÷, ×
         btnDel.setBackground(new java.awt.Color(41, 39, 44));
         btnDel.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         btnDel.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,6 +188,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         btnMult.addActionListener(this::btnMultActionPerformed);
         buttonsPanel.add(btnMult, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
+        // Second row: 7, 8, 9, -
         btn7.setBackground(new java.awt.Color(21, 20, 22));
         btn7.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         btn7.setForeground(new java.awt.Color(255, 255, 255));
@@ -196,7 +199,6 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         btn7.setIconTextGap(1);
         btn7.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn7.setPreferredSize(new java.awt.Dimension(70, 70));
-        // digits are wired in addEvents() loop
         buttonsPanel.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         btn8.setBackground(new java.awt.Color(21, 20, 22));
@@ -236,6 +238,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         btnSub.addActionListener(this::btnSubActionPerformed);
         buttonsPanel.add(btnSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
 
+        // Third row: 4, 5, 6, +
         btn4.setBackground(new java.awt.Color(21, 20, 22));
         btn4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         btn4.setForeground(new java.awt.Color(255, 255, 255));
@@ -285,6 +288,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         btnPlus.addActionListener(this::btnPlusActionPerformed);
         buttonsPanel.add(btnPlus, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
 
+        // Fourth row: 1, 2, 3
         btn1.setBackground(new java.awt.Color(21, 20, 22));
         btn1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         btn1.setForeground(new java.awt.Color(255, 255, 255));
@@ -321,6 +325,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         btn3.setPreferredSize(new java.awt.Dimension(70, 70));
         buttonsPanel.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, -1));
 
+        // Last row: +/- , 0, ., =
         btnPlusSub.setBackground(new java.awt.Color(21, 20, 22));
         btnPlusSub.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         btnPlusSub.setForeground(new java.awt.Color(255, 255, 255));
@@ -374,32 +379,56 @@ public final class CalculatorFrame extends javax.swing.JFrame {
 
         app.add(buttonsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 320, 390));
 
-        //  Added a new "History" button that connects the GUI with HistoryDecorator.
-        
-    JButton btnHistory = new JButton("History");
-    btnHistory.setBackground(new java.awt.Color(60, 58, 64));
-    btnHistory.setFont(new java.awt.Font("Century Gothic", 1, 14));
-    btnHistory.setForeground(java.awt.Color.WHITE);
-    btnHistory.setFocusPainted(false);
-    btnHistory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 39, 44)));
-    btnHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    btnHistory.addActionListener(e -> {
-        if (CalculatorFacade.getHistory().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No history yet!");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                String.join("\n", CalculatorFacade.getHistory()),
-                "Calculation History",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-        }
-    });
+        // ================== EXTRA BUTTONS: HISTORY + UNDO =================
+        JButton btnHistory = new JButton("History");
+        btnHistory.setBackground(new java.awt.Color(60, 58, 64));
+        btnHistory.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        btnHistory.setForeground(java.awt.Color.WHITE);
+        btnHistory.setFocusPainted(false);
+        btnHistory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 39, 44)));
+        btnHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHistory.addActionListener(e -> {
+            java.util.List<String> history = CalculatorFacade.getHistory();
+            if (history == null || history.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No history yet!");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    String.join("\n", history),
+                    "Calculation History",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
 
-     app.add(btnHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 120, 35));
-     app.revalidate();
-     app.repaint();
-     
+        // Undo button uses Facade + Memento internally
+        JButton btnUndo = new JButton("Undo");
+        btnUndo.setBackground(new java.awt.Color(60, 58, 64));
+        btnUndo.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        btnUndo.setForeground(java.awt.Color.WHITE);
+        btnUndo.setFocusPainted(false);
+        btnUndo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 39, 44)));
+        btnUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnUndo.addActionListener(e -> {
+            boolean ok = CalculatorFacade.undo();
+            if (ok) {
+                refreshDisplay();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No more undo steps!");
+            }
+        });
+
+        int historyX = 40;
+        int undoX = 170;
+        int y = 540;
+
+        app.add(btnHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(historyX, y, 120, 40));
+        app.add(btnUndo, new org.netbeans.lib.awtextra.AbsoluteConstraints(undoX, y, 120, 40));
+        app.revalidate();
+        app.repaint();
+
+        // ====================== CUSTOM TITLE BAR ==========================
         titleBar.setBackground(new java.awt.Color(21, 20, 22));
         titleBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -458,6 +487,7 @@ public final class CalculatorFrame extends javax.swing.JFrame {
 
         app.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 30));
 
+        // ========================= LAYOUT ROOT ============================
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -474,11 +504,9 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    /* ======================= event handlers ======================= */
-
+   
     private void btnDotActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
-        CalculatorFacade.appendNumber(CalculatorFacade.getCurrent().isBlank() ? "0." : ".");
+        CalculatorFacade.appendDot();
         refreshDisplay();
     }
 
@@ -489,49 +517,40 @@ public final class CalculatorFrame extends javax.swing.JFrame {
 
     private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {
         CalculatorFacade.compute();
-        refreshDisplay();               // show result OR "Error"
-        CalculatorFacade.clearCurrentIfError();
+        refreshDisplay();
     }
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
         CalculatorFacade.chooseOperation("+");
         refreshDisplay();
     }
 
     private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
         CalculatorFacade.chooseOperation("×");
         refreshDisplay();
     }
 
     private void btnSubActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
         CalculatorFacade.chooseOperation("-");
         refreshDisplay();
     }
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
         CalculatorFacade.chooseOperation("÷");
         refreshDisplay();
     }
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {
-        if ("Error".equals(CalculatorFacade.getCurrent())) {
-            CalculatorFacade.clearCurrentIfError();
-            refreshDisplay();
-            return;
-        }
         CalculatorFacade.backspace();
         refreshDisplay();
     }
 
     private void btnPlusSubActionPerformed(java.awt.event.ActionEvent evt) {
-        CalculatorFacade.clearCurrentIfError();
         CalculatorFacade.toggleSign();
         refreshDisplay();
     }
+
+    // ===== Title bar / close / minimize (UI only, no patterns) =====
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {
         btnClose.setBackground(new Color(255, 75, 75));
@@ -570,7 +589,6 @@ public final class CalculatorFrame extends javax.swing.JFrame {
         this.setLocation(xx - x, yy - y);
     }
 
-    // Variables declaration - do not modify
     private javax.swing.JPanel app;
     private static javax.swing.JButton btn0;
     private static javax.swing.JButton btn1;
@@ -599,4 +617,5 @@ public final class CalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JPanel resultsPanel;
     private javax.swing.JLabel title;
     private javax.swing.JPanel titleBar;
+    // End of variables declaration
 }
